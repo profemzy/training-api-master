@@ -5,7 +5,7 @@
 1. Dockerize the app, build and push to Dockerhub.
 2. Create Kubernetes deployment files.
 3. Install Postgres using Helm ([link](https://artifacthub.io/packages/helm/bitnami/postgresql)).
-4. Create `db-credentials` secret in the `dev` namespace with your values for `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `JWT_PRIVATE_KEY`.
+4. Create `db-credentials` secret in the `dev` namespace or namespace of your choice with your values for `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `JWT_PRIVATE_KEY`.
     `kubectl create secret generic db-credentials --from-literal=DB_HOST=... --from-literal=DB_USER=... --from-literal=DB_PASSWORD=... --from-literal=DB_NAME=... --from-literal=JWT_PRIVATE_KEY=...`
 5. Update the deployment image url in the Kubernetes manifests based on your computer architecture `profemzy/training-api:vArm` or `profemzy/training-api:v2` for arm and amd64 respectively.
 5. Deploy the app using the Kubernetes manifests.
