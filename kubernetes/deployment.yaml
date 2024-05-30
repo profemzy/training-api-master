@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: training-app
+  labels:
+    app: training-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: training-app
+  template:
+    metadata:
+      labels:
+        app: training-app
+    spec:
+      containers:
+        - name: dancerapy-app
+          image: profemzy/training-api:vArm
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_HOST
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_NAME
+            - name: JWT_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: JWT_PRIVATE_KEY
+            - name: TOKEN_TTL
+              value: "2000"
+            - name: GIN_MODE
+              value: "release"
+          resources:
+            requests:
+              cpu: "0.2"
+              memory: "56Mi"
