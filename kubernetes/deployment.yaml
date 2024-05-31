@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: dancerapy-app
-          image: profemzy/training-api:vArm
+          image: training-app:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env:
