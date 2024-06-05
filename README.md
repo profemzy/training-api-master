@@ -14,10 +14,10 @@
     `kubectl -n dev create secret generic db-credentials --from-literal=DB_HOST=... --from-literal=DB_USER=... --from-literal=DB_PASSWORD=... --from-literal=DB_NAME=... --from-literal=JWT_PRIVATE_KEY=anystringofyourchoice`
 8. Deploy the app using the Kubernetes manifests `kubectl -n dev apply -f kubernetes/`
 9. Enable needed minikube addons `minikube addons enable metrics-server`, `minikube addons enable ingress`. 
-10. In another terminal Run `minikube tunnel` for ingress traffic.
+10. In another terminal Run `minikube tunnel` for ingress traffic. Note minikube ip just in case it's needed `minikube ip`
 11. Test the app with a POST request to create a user.
-    `curl -X POST -H "Content-Type: application/json" -d '{"username": "demo", "password": "someverylongPASSWORD"}' http://localhost/auth/register`
+    `curl -X POST -H "Content-Type: application/json" -d '{"username": "demo", "password": "someverylongPASSWORD"}' http://localhost/auth/register`  or replace localhost with minikube ip
 12. Install hey for mac use `brew install hey` or `sudo apt install hey` depending on your platform
-13. Load test the app using hey `hey -n 100000 -c 10 http://localhost/api/health` this sends 100000 requests with a concurrency of 10 to your API endpoint
+13. Load test the app using hey `hey -n 100000 -c 10 http://localhost/api/health` this sends 100000 requests with a concurrency of 10 to your API endpoint or replace localhost with minikube ip
 13. Monitor autoscaling with `kubectl -n dev get hpa`.
 14. Monitor pod creation with `kubectl -n dev get pods`.
