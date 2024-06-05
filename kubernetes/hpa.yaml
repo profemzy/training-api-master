@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2 # Note the newer API version
 kind: HorizontalPodAutoscaler
 metadata:
   name: training-app-hpa
@@ -9,4 +9,16 @@ spec:
     name: training-app
   minReplicas: 1
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 20
+  metrics: 
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 20
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: AverageValue
+        averageValue: 100Mi
