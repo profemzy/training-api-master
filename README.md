@@ -6,9 +6,9 @@
 2. To verify your terminal is using minikube’s docker-env you can check the value of the environment variable `MINIKUBE_ACTIVE_DOCKERD` to reflect the cluster name. 
     `echo $MINIKUBE_ACTIVE_DOCKERD`
 3. Build the docker image using `docker build -t training-app . `
-4. Confirm that your newly built image is available in minikube `$ minikube image ls --format table`
+4. Confirm that your newly built image is available in minikube `minikube image ls --format table`
 5. Create kubernetes namespace `kubectl create ns dev`
-6. Add bitnami `helm repo add https://charts.bitnami.com/bitnami`
+6. Add bitnami `helm repo add bitnami https://charts.bitnami.com/bitnami`
 5. Install Postgres using Helm ([link](https://artifacthub.io/packages/helm/bitnami/postgresql)). `helm -n dev install db bitnami/postgresql --version 15.5.1`
 6. Create `db-credentials` secret in the `dev` namespace with your values for `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `JWT_PRIVATE_KEY`.
     `kubectl -n dev create secret generic db-credentials --from-literal=DB_HOST=... --from-literal=DB_USER=... --from-literal=DB_PASSWORD=... --from-literal=DB_NAME=... --from-literal=JWT_PRIVATE_KEY=anystringofyourchoice`
