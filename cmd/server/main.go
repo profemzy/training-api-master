@@ -10,6 +10,9 @@ import (
 )
 
 func main() {
+	// Set logrus to use JSON formatter
+	log.SetFormatter(&log.JSONFormatter{})
+
 	loadDatabase()
 	serveApplication()
 }
@@ -18,12 +21,16 @@ func loadDatabase() {
 	database.Connect()
 	err := database.Database.AutoMigrate(&model.User{})
 	if err != nil {
-		log.Error("Error migrating User model")
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Error("Error migrating User model")
 		return
 	}
 	err = database.Database.AutoMigrate(&model.Training{})
 	if err != nil {
-		log.Error("Error migrating Training model")
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Error("Error migrating Training model")
 		return
 	}
 }
@@ -46,7 +53,12 @@ func serveApplication() {
 
 	err := router.Run(":8080")
 	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Error("Error starting server")
 		return
 	}
-	log.Info("Server running on port 8080")
+	log.WithFields(log.Fields{
+		"port": "8080",
+	}).Info("Server running on port 8080")
 }
