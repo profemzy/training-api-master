@@ -2,11 +2,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: training-app-ingress
+  namespace: dev
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - http:
+    - host: git.infotitans.ca  
+      http:
         paths:
           - pathType: Prefix
             path: /
